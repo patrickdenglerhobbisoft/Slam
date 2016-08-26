@@ -45,28 +45,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\x64\symsrv.yes" />
-    <None Include="bin\x86\symsrv.yes" />
-    <None Include="Injection32.exp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Injection32.ilk">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Injection32.lib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Injection64.exp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Injection64.lib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="App.config" />
+    <None Include="bin\Debug\x64\symsrv.yes" />
+    <None Include="bin\Debug\x86\symsrv.yes" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DDIEngine\DDIEngine.csproj">
       <Project>{7786fec1-5321-4940-a775-0aea8b47aa26}</Project>
@@ -74,30 +57,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\x64\dbg64.dll" />
-    <Content Include="bin\x64\dbgeng.dll" />
-    <Content Include="bin\x64\srcsrv.dll" />
-    <Content Include="bin\x64\SymbolCheck.dll" />
-    <Content Include="bin\x64\symchk.exe" />
-    <Content Include="bin\x64\symsrv.dll" />
-    <Content Include="bin\x86\dbg32.dll" />
-    <Content Include="bin\x86\dbgeng.dll" />
-    <Content Include="bin\x86\srcsrv.dll" />
-    <Content Include="bin\x86\SymbolCheck.dll" />
-    <Content Include="bin\x86\symchk.exe" />
-    <Content Include="bin\x86\symsrv.dll" />
-    <Content Include="Injection32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Injection32.pdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Injection64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Injection64.pdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="bin\Debug\x64\dbg64.dll" />
+    <Content Include="bin\Debug\x64\dbgeng.dll" />
+    <Content Include="bin\Debug\x64\srcsrv.dll" />
+    <Content Include="bin\Debug\x64\SymbolCheck.dll" />
+    <Content Include="bin\Debug\x64\symchk.exe" />
+    <Content Include="bin\Debug\x64\symsrv.dll" />
+    <Content Include="bin\Debug\x86\dbg32.dll" />
+    <Content Include="bin\Debug\x86\dbgeng.dll" />
+    <Content Include="bin\Debug\x86\srcsrv.dll" />
+    <Content Include="bin\Debug\x86\SymbolCheck.dll" />
+    <Content Include="bin\Debug\x86\symchk.exe" />
+    <Content Include="bin\Debug\x86\symsrv.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

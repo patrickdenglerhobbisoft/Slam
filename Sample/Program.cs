@@ -19,36 +19,44 @@ namespace Sample
             var injector = new DDIEngine.Injector();
             if (injector.CurrentStatus == InjectionHelper.Status.Ready)
             {
-                System.Diagnostics.Debug.WriteLine("Current results of WhatsTheTime : " + MySourceClass.WhatsTheTime());
-                injector.ReplaceStaticMethod(typeof(MySourceClass), typeof(MyMockClass), "WhatsTheTime", "WhatsTheTime_Mock");
-                System.Diagnostics.Debug.WriteLine("Current results of WhatsTheTime : " + MySourceClass.WhatsTheTime());
-                var wrapper = new MyWrapperClass();
-                System.Diagnostics.Debug.WriteLine("Current results of WhatsTheTime : " + wrapper.GetTheTime());
+                // replace static
+                System.Diagnostics.Debug.WriteLine("Current results of StaticWhatsTheTime : " + MySourceClass.StaticWhatsTheTime());
+                injector.ReplaceStaticMethod(typeof(MySourceClass), typeof(MyMockClass), "StaticWhatsTheTime", "StaticWhatsTheTime_Mock");
+                System.Diagnostics.Debug.WriteLine("Current results of StaticWhatsTheTime : " + MySourceClass.StaticWhatsTheTime());
+             
+                // use new model for non-static - NOT YET WORKING
                 
+                MySourceClass mySourceClass = new MySourceClass();
+                System.Diagnostics.Debug.WriteLine("Current results of WhatsTheTime : " + mySourceClass.WhatsTheTime());
+                injector.ReplaceMethod(typeof(MySourceClass), typeof(MyMockClass), "WhatsTheTime", "WhatsTheTime_Mock", null);
+                System.Diagnostics.Debug.WriteLine("Current results of WhatsTheTime : " + mySourceClass.WhatsTheTime());
+
             }
           
         }
     }
 
-
     public class MySourceClass
     {
-        public static string WhatsTheTime()
+        public static string StaticWhatsTheTime()
+        {
+            return DateTime.Now.ToShortTimeString();
+        }
+
+        public string WhatsTheTime()
         {
             return DateTime.Now.ToShortTimeString();
         }
     }
 
-    public class MyWrapperClass
-    {
-        public string GetTheTime()
-        {
-            return MySourceClass.WhatsTheTime();
-        }
-    }
+  
     public class MyMockClass
     {
-        public static string WhatsTheTime_Mock()
+        public static string StaticWhatsTheTime_Mock()
+        {
+            return "It's Time to Get Ill.";
+        }
+        public string WhatsTheTime_Mock()
         {
             return "It's Time to Get Ill.";
         }

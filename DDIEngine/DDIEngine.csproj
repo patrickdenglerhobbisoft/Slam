@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C11CC87-4B2B-4DFC-9962-3866D09DC392}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{7786FEC1-5321-4940-A775-0AEA8B47AA26}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample</RootNamespace>
-    <AssemblyName>Sample</AssemblyName>
+    <RootNamespace>DDIEngine</RootNamespace>
+    <AssemblyName>DDIEngine</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -26,17 +26,17 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.5.21\lib\net45\Moq.dll</HintPath>
+    <Reference Include="ExactTarget.Core">
+      <HintPath>..\..\..\..\..\inetpub\Common\ExactTarget.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,35 +47,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Addition.cs" />
+    <Compile Include="AOP\AOP.cs" />
+    <Compile Include="AOP\AOP_Extra.cs" />
+    <Compile Include="AOP\AOP_Test.cs" />
+    <Compile Include="DDIException.cs" />
+    <Compile Include="InjectionHelper.cs" />
+    <Compile Include="Injector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealTokens.cs" />
+    <Compile Include="SDILReader\Globals.cs" />
+    <Compile Include="SDILReader\ILInstruction.cs" />
+    <Compile Include="SDILReader\MethodBodyReader.cs" />
+    <Compile Include="ShortLinq.cs" />
+    <Compile Include="TypeTemplate\TypeTemplate.cs" />
+    <Compile Include="TypeTemplate\TypeTemplate_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\x64\symsrv.yes" />
-    <None Include="bin\Debug\x86\symsrv.yes" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\DDIEngine\DDIEngine.csproj">
-      <Project>{7786fec1-5321-4940-a775-0aea8b47aa26}</Project>
-      <Name>DDIEngine</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\x64\dbg64.dll" />
-    <Content Include="bin\Debug\x64\dbgeng.dll" />
-    <Content Include="bin\Debug\x64\srcsrv.dll" />
-    <Content Include="bin\Debug\x64\SymbolCheck.dll" />
-    <Content Include="bin\Debug\x64\symchk.exe" />
-    <Content Include="bin\Debug\x64\symsrv.dll" />
-    <Content Include="bin\Debug\x86\dbg32.dll" />
-    <Content Include="bin\Debug\x86\dbgeng.dll" />
-    <Content Include="bin\Debug\x86\srcsrv.dll" />
-    <Content Include="bin\Debug\x86\SymbolCheck.dll" />
-    <Content Include="bin\Debug\x86\symchk.exe" />
-    <Content Include="bin\Debug\x86\symsrv.dll" />
+    <Folder Include="DDI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

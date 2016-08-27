@@ -52,6 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Injection32.exp" />
+    <None Include="bin\Debug\Injection32.ilk" />
+    <None Include="bin\Debug\Injection32.lib" />
+    <None Include="bin\Debug\Injection64.exp" />
+    <None Include="bin\Debug\Injection64.lib" />
+    <None Include="bin\Debug\x64\Injection32.exp" />
+    <None Include="bin\Debug\x64\Injection32.ilk" />
+    <None Include="bin\Debug\x64\Injection32.lib" />
+    <None Include="bin\Debug\x64\Injection64.exp" />
+    <None Include="bin\Debug\x64\Injection64.lib" />
     <None Include="bin\Debug\x64\symsrv.yes" />
     <None Include="bin\Debug\x86\symsrv.yes" />
     <None Include="packages.config" />
@@ -64,8 +74,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Injection32.dll" />
+    <Content Include="bin\Debug\Injection32.pdb" />
+    <Content Include="bin\Debug\Injection64.dll" />
+    <Content Include="bin\Debug\Injection64.pdb" />
     <Content Include="bin\Debug\x64\dbg64.dll" />
     <Content Include="bin\Debug\x64\dbgeng.dll" />
+    <Content Include="bin\Debug\x64\Injection32.dll" />
+    <Content Include="bin\Debug\x64\Injection32.pdb" />
+    <Content Include="bin\Debug\x64\Injection64.dll" />
+    <Content Include="bin\Debug\x64\Injection64.pdb" />
     <Content Include="bin\Debug\x64\srcsrv.dll" />
     <Content Include="bin\Debug\x64\SymbolCheck.dll" />
     <Content Include="bin\Debug\x64\symchk.exe" />

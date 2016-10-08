@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDIEngine
+namespace Hobbisoft.Slam.DynamicInjection
 {
     [Serializable]
     public class DDIException : Exception

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Reflection.Emit;
 
 
+
 public static class InjectionHelper
 {
     public enum Status : int
@@ -22,6 +23,7 @@ public static class InjectionHelper
         Error_DownloadPDBFailed = -6,
         Error_CLRNotFound = -7,
     }
+
 
     #region P/Invoke
     [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Unicode)]
@@ -49,17 +51,25 @@ public static class InjectionHelper
     private static GetStatusDelegate _getStatusDelegate;
     private static WaitForIntializationCompletionDelegate _waitForIntializationCompletionDelegate;
 
-    public static void Initialize()
-    {
 
-        string currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+ 
+
+    public static void Initialize(bool showLoggingUI = false)
+    {
+        //if (showLoggingUI)
+        //{
+        //    _loggingForm = new LoggingForm();
+        //    _loggingForm.Show();
+        //}
+        string currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         currentDir = Regex.Replace(currentDir, @"^(file\:\\)", string.Empty);
 
         // Environment.Is64BitProcess
         string path = Path.Combine(currentDir, (IntPtr.Size == 8) ? "Injection64.dll" : "Injection32.dll");
 
 #if DEBUG
-        System.Diagnostics.Debug.WriteLine("The injection.dll is only designed for .Net release mode process. it is not supposed to be used for debug mode.");
+        
+        Log("The injection.dll is only designed for .Net release mode process. it is not supposed to be used for debug mode.");
 #endif
 
         _moduleHandle = LoadLibraryW(path);
@@ -182,6 +192,86 @@ public static class InjectionHelper
         return IntPtr.Zero;
     }
 
+
+    public static void Log(string message)
+    {
+        System.Diagnostics.Debug.WriteLine(message);
+        //if (_loggingForm != null)
+        //{
+        //    _loggingForm.Show();
+        //    _loggingForm.AddMessage(message);
+        //}
+    }
+
+
+
+    internal static void Dispose()
+    {
+        //if (_loggingForm != null)
+        //{
+        //    _loggingForm.Hide();
+        //    _loggingForm= null;
+        //}
+    }
+
+    public static MethodInfo GetSealedMethod(string AssemblyeNameWithPath, string FullClassName, string MethodName, object[] MethodParameters)
+    {
+        object result = new object();
+        return   GetSealedMethod(AssemblyeNameWithPath,FullClassName,MethodName,MethodParameters,false,ref result);
+
+    }
+    /// <summary>
+    /// 
+    /// 
+    /// </summary>
+    /// <param name="AssemblyeNameWithPath">e.g.  @"D:\inetpub\Common\Hobbisoft.Slam.Core.dll"</param>
+    /// <param name="FullClassName">e.g.  "Hobbisoft.Slam.Integration.Salesforce.MyFactoryFactory"</param>
+    /// <param name="MethodName">e.g.  "MySealedFunction"</param>
+    /// <param name="MethodParameters">e.g.  new object[] { true, new ETPrincipal(1) };</param>
+    /// <returns></returns>
+    public static MethodInfo GetSealedMethod(string AssemblyeNameWithPath, string FullClassName, string MethodName, object[] MethodParameters,bool InvokeMethod , ref object Result  )
+    {
+
+        Assembly coreAssembly = Assembly.LoadFile(AssemblyeNameWithPath);
+        Type coreType = coreAssembly.GetType(FullClassName);
+
+        var methods = coreType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
+
+        MethodInfo methodInfo = null;
+        foreach (var m in methods.Where(m => m.Name == MethodName && m.GetParameters().Length == MethodParameters.Length))
+        {
+            if (MethodParameters.Length == 0)
+            {
+                // nothing to compare just set the methodInfo and break
+                methodInfo = m;
+            }
+            else
+            {
+                var p = m.GetParameters();
+                bool parametersMatch = true;
+                for (var i = 0; i < p.Length; i++) // no for reach order not garunteed
+                {
+                    if (p[i].ParameterType.ToString() != MethodParameters[i].GetType().ToString())
+                    {
+                        parametersMatch = false;
+                        break;
+                    }
+                    
+                }
+                if (parametersMatch )
+                {
+                    methodInfo = m;
+                    break;
+                }
+            }
+        }
+
+        if (methodInfo != null && InvokeMethod)
+        {
+            Result = methodInfo.Invoke(null, MethodParameters);
+        }
+        return methodInfo;
+    }
 
 }
 

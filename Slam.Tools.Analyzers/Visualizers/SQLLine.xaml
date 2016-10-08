@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Hobbisoft.Slam.Tools.Analyzers.SQLLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="300" FontSize="14">
+    <Border BorderThickness="3" BorderBrush="#FFAE2200">
+        <Canvas>
+            <Grid Margin="5">
+                <Border>
+                    <StackPanel x:Name="StackPanelLine" Orientation="Horizontal">
+                        <Label x:Name="lblSQLMain">exec sproc</Label>
+                        <Label x:Name="lblParameters"   Foreground="#FF005DFF" MouseDown="lblParameters_MouseDown">(...)
+                            <Label.ToolTip>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0"  Orientation="Horizontal" >
+                                        <Image VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5" Width="25" Height="35" Source="/Hobbisoft.Slam.Tools.Analyzers;component/Resources/sqldev_512x512x32.png"  />
+                                        <Label x:Name="LabelSprocName" VerticalAlignment="Center" FontWeight="Bold" >Sproc Name</Label>
+                                    </StackPanel>
+                                    <StackPanel x:Name="StackPanelSqlLines" Grid.Row="1" Width="200" Orientation="Vertical"  HorizontalAlignment="Left"  >
+                                    </StackPanel>
+                                </Grid>
+                            </Label.ToolTip>
+                        </Label>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+        </Canvas>
+    </Border>
+</UserControl>

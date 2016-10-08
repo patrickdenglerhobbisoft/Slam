@@ -1,0 +1,28 @@
+﻿<UserControl xmlns:Visualizers="clr-namespace:Slam.Tools"  x:Class="Slam.Tools.ErrorLog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+
+
+    <Grid Background="White">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="5" ShadowDepth="3" />
+        </Grid.Effect>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal"   >
+        <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="/Slam.Tools;component/Resources/erorr.png" Height="20" Width="20" />
+                <TextBlock Margin="10,5,0,0" FontWeight="Bold">Error Logger</TextBlock>
+        </StackPanel>
+            <TextBox Grid.Row="1"  x:Name="StackPanelStatements" TextWrapping="Wrap" >
+         
+        </TextBox>
+        </Grid>
+ 
+</UserControl>

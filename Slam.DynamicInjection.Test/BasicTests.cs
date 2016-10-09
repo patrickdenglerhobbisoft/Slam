@@ -40,25 +40,6 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
             DefaultInjectors.UpdateLogger("Message1");
         }
 
-#if UNITTEST
-        [TestMethod]
-#endif
-        public void RunUI2()
-        {
-            //int MID = 10650712;
-
-            //AccountContext.SetCurrent(MID, MID, 0);
-            //var principal = AccountContext.Current.ToETPrincipal();
-            //List<SqlParameter> Params = new List<SqlParameter>();
-
-            //var p = new SqlParameter("@CustomerId", SqlDbType.Int);
-            //p.SqlValue = 1;
-            //Params.Add(p);
-            //SqlParameter[] parms = Params.ToArray<SqlParameter>();
-
-            //Injector.SlamClass(typeof(Hobbisoft.Slam.Core.DBCommand), typeof(Hobbisoft.Slam.DynamicInjection.DBCommand));
-            //Hobbisoft.Slam.Core.DBConnection.ExecuteNonQuery(principal, DatabaseType.Member, "dbo.Dev_Testing", parms, 300, 0);
-        }
 
 #if UNITTEST
         [TestMethod]
@@ -90,7 +71,7 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 #endif
         public void RunSquirt()
         {
-
+            // return this is not working yet
             Injector.GetILForMethod(typeof(Squirter), "MyFunction");
             Injector.GetILForMethod(typeof(Squirtee), "MyFunction");
             ////Injector.GetILForMethod(typeof(FinalSquirtExample), "MyFunction");

@@ -44,6 +44,12 @@
   <PropertyGroup>
     <RootNamespace>Slam.VisualStudio</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Slam.VisualStudio.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -139,10 +145,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="C:\Users\pdengler\Documents\Visual Studio 2013\Addins\ExactTarget.DynamicInjection.VisualStudio - For Testing.AddIn">
-      <Link>ExactTarget.DynamicInjection.VisualStudio - For Testing.AddIn</Link>
-    </Content>
-    <Content Include="ExactTarget.DynamicInjection.VisualStudio.AddIn" />
+    <Content Include="Slam.VisualStudio.AddIn" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slam.Tools.Analyzers\Slam.Visualizers.csproj">
@@ -152,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Slam.VisualStudio.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

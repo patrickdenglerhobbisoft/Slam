@@ -74,7 +74,14 @@ public static class InjectionHelper
 
         _moduleHandle = LoadLibraryW(path);
         if (_moduleHandle == IntPtr.Zero)
-            throw new FileNotFoundException( string.Format( "Failed to load [{0}]", path) );
+        {
+            path = path.Replace("\\bin", "\\bin\\x86");
+            // try x86
+            _moduleHandle = LoadLibraryW(path);
+             if (_moduleHandle == IntPtr.Zero)
+                 throw new FileNotFoundException(string.Format("Failed to load [{0}]", path));
+        }
+           
 
         IntPtr ptr = GetProcAddress(_moduleHandle, "UpdateILCodes");
         if (ptr == IntPtr.Zero)

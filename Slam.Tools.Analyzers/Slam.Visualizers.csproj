@@ -42,7 +42,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>a.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Slam.Visualizers.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -163,6 +163,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Slam.Visualizers.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

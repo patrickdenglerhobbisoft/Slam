@@ -38,7 +38,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ExactTarget.DynamicInjection.UnitTests.Classes.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Slam.UnitTests.Classes.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -69,8 +69,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExactTarget.DynamicInjection.UnitTests.Classes.snk" />
     <None Include="packages.config" />
+    <None Include="Slam.UnitTests.Classes.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

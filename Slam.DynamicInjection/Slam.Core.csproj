@@ -39,8 +39,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Slam.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.Shell.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -115,6 +114,7 @@
   <ItemGroup>
     <None Include="3rdParty.bin\x86\symsrv.yes" />
     <None Include="packages.config" />
+    <None Include="Slam.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DynamicInjection\" />
@@ -127,7 +127,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start XCOPY "$(ProjectDir)3rdParty.bin" "$(ProjectDir)$(OutDir)"  /Y /R /S</PostBuildEvent>
+    <PostBuildEvent>start XCOPY "$(ProjectDir)3rdParty.bin" "$(ProjectDir)$(OutDir)"  /Y /R /S
+start XCOPY "$(SolutionDir)bin" "$(ProjectDir)$(OutDir)"  /Y /R /S</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

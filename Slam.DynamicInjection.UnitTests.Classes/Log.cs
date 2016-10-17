@@ -25,9 +25,11 @@ namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
                     prefix = "+++>";
                     break;
             }
-
+#if DEBUG
             Debug.WriteLine(prefix + " " + message);
-
+#else
+            Console.WriteLine(prefix + " " + message);
+#endif
 
         }
     }

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
-
+using SlamExternalReferenceTest;
 using Hobbisoft.Slam.DynamicInjection.UnitTests.Classes;
-
 
 #if UNITTEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Reflection;
+
+
 
 #endif
 namespace Hobbisoft.Slam.DynamicInjection.Test
@@ -37,7 +38,9 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 #endif
         public void RunUI()
         {
+#if VSTOOLS
             DefaultInjectors.UpdateLogger("Message1");
+#endif
         }
 
 
@@ -49,7 +52,8 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
             //RunBasics();
             //RunSealed();
             //RunSquirt();
-            RunUI();
+            // RunUI();
+            RunExternal();
 
         }
 
@@ -83,8 +87,22 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 
 
         }
+#if UNITTEST
+        [TestMethod]
+#endif
+        public void RunExternal()
+        {
+          //  SlamExternalReferenceTest.MyExternalClass ec = new SlamExternalReferenceTest.MyExternalClass();
+    //        ExternalClassButNot ec2 = new ExternalClassButNot();
+        //    Log.Output(@"Current Value of SlamExternalReferenceTest.ImExternal() = " + ec.ImExternal());
+        //    ec = null;
+        //    GC.Collect();  
+        //    GC.WaitForPendingFinalizers();
+            Injector.SlamClass(typeof(ExternalClass), typeof(ExternalClass_Slam));
 
-
+            var ec = new ExternalClass();
+            Log.Output(@"Current Value of SlamExternalReferenceTest.ImExternal() now = " + ec.ImExternal());
+        }
 #if UNITTEST
         [TestMethod]
 #endif
@@ -120,5 +138,5 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 
         }
 
-    }  
+    }
 }

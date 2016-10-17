@@ -1,4 +1,5 @@
-﻿using Hobbisoft.Slam.Tools.Analyzers;
+﻿#if VSTOOLS
+using Hobbisoft.Slam.Tools.Analyzers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -114,3 +115,4 @@ namespace Hobbisoft.Slam.DynamicInjection
         }
     }
 }
+#endif

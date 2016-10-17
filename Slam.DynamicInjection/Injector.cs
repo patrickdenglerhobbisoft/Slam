@@ -93,7 +93,7 @@ namespace Hobbisoft.Slam.DynamicInjection
             foreach (MethodInfo methodFromReplacement in replacementType.GetMethods(bf))
             {
                 // premptive strike that needs to be replaced with better determiners
-                if ((methodFromReplacement.Name == "ToString") || (methodFromReplacement.Name == "GetHashCode") || (methodFromReplacement.Name == "Equals") ||
+                if ((methodFromReplacement.Name == "ToString") || (methodFromReplacement.Name == "Dispose") || (methodFromReplacement.Name == "GetHashCode") || (methodFromReplacement.Name == "Equals") ||
                     (methodFromReplacement.Name == "ReferenceEquals") || (methodFromReplacement.Name == "GetType") || (methodFromReplacement.Name == "Finalize") || (methodFromReplacement.Name == "MemberwiseClone"))
                     continue;
 

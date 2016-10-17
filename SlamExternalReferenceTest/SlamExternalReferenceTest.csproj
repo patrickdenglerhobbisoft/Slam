@@ -4,24 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7279C489-79E3-4364-8AD8-C951993873AB}</ProjectGuid>
+    <ProjectGuid>{4256B8CF-84A2-47BE-93A5-90E69C84FE1F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Slam.UnitTests.Classes</RootNamespace>
-    <AssemblyName>Slam.UnitTests.Classes</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>SlamExternalReferenceTest</RootNamespace>
+    <AssemblyName>SlamExternalReferenceTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,13 +35,9 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Slam.UnitTests.Classes.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>SlamExternalReferenceTest.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,24 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicClasses.cs" />
-    <Compile Include="ExternalClassButNot.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="ExternalClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SealedClass.cs" />
-    <Compile Include="Slammers.cs" />
-    <Compile Include="Squirtee.cs" />
-    <Compile Include="Squirter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Slam.DynamicInjection\Slam.Core.csproj">
-      <Project>{dd9a47fe-9ddd-4965-8c6f-c60765bc072a}</Project>
-      <Name>Slam.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Slam.UnitTests.Classes.snk" />
+    <None Include="SlamExternalReferenceTest.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

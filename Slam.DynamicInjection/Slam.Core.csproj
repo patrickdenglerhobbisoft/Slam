@@ -26,14 +26,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE;VSTOOLS1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -118,12 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DynamicInjection\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Slam.Tools.Analyzers\Slam.Visualizers.csproj">
-      <Project>{82d2a48a-cfb7-484f-9d7f-9c557a797733}</Project>
-      <Name>Slam.Visualizers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

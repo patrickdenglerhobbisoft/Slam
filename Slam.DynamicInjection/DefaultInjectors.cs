@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if VSTOOLS
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,3 +67,4 @@ namespace Hobbisoft.Slam.DynamicInjection
 
 
 }
+#endif

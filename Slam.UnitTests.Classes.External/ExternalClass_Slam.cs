@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
+namespace Slam.UnitTests.Classes.External
 {
-    public class ExternalClass_Slam 
+    public class ExternalClass_Slam
     {
         public string ImExternal()
         {

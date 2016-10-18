@@ -30,7 +30,7 @@ namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
         [SlamIgnore]
         string IngoreThisOne()
         {
-            return "foo";
+            return "bar";
         }
 
         public string GetString(int Number)

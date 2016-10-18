@@ -30,7 +30,7 @@
     <DefineConstants>TRACE;DEBUG;UNITTEST</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -80,9 +80,9 @@
       <Project>{dd9a47fe-9ddd-4965-8c6f-c60765bc072a}</Project>
       <Name>Slam.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlamExternalReferenceTest\SlamExternalReferenceTest.csproj">
-      <Project>{4256b8cf-84a2-47be-93a5-90e69c84fe1f}</Project>
-      <Name>SlamExternalReferenceTest</Name>
+    <ProjectReference Include="..\Slam.UnitTests.Classes.External\Slam.UnitTests.Classes.External.csproj">
+      <Project>{66b15acf-90dc-4303-88c5-9f4f94a1ee05}</Project>
+      <Name>Slam.UnitTests.Classes.External</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

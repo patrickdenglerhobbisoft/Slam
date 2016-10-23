@@ -1,9 +1,11 @@
-﻿using System;
+﻿using EasyHook;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -33,8 +35,8 @@ namespace Hobbisoft.Slam.DynamicInjection
 
          private static BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
 
-     
-        public static Dictionary<string, List<MethodInfoRestoration>> ClassInfoRestoration = new Dictionary<string, List<MethodInfoRestoration>>();
+
+         public static Dictionary<string, List<MethodInfoRestoration>> ClassInfoRestoration;
         public static void SlamClass(Type sourceType, Type replacementType, Type finalModelType = null)
         {
             InitializeIfNot();
@@ -50,7 +52,10 @@ namespace Hobbisoft.Slam.DynamicInjection
         private static void InitializeIfNot()
         {
             if (_singleInjector == null)
+            {
                 _singleInjector = new Injector();
+                ClassInfoRestoration = new Dictionary<string, List<MethodInfoRestoration>>();
+            }
         }
         private List<Byte[]> GetILForMethodInternal(Type type, string methodName)
         {
@@ -74,17 +79,44 @@ namespace Hobbisoft.Slam.DynamicInjection
             
         }
 
-        private void OutputIL(string className, string methodName, byte[] results)
+     
+        public static void Slam( object classToSlam)
         {
-            Debug.WriteLine(className + "." + methodName);
-            Debug.WriteLine("===========================");
-            // output in debug mode
-            foreach (var b in results)  { Debug.WriteLine(b); }
+            InjectionHelper.Log("entered Slam");
+            try
+            {
+                Type classTypeToSlam = classToSlam.GetType();
+                if (ClassInfoRestoration.ContainsKey(classTypeToSlam.Name))
+                {
+                    foreach (var restorationItem in ClassInfoRestoration[classTypeToSlam.Name])
+                    {
+                        if (!restorationItem.OriginalMethod.IsStatic)
+                        {
+                            foreach (MethodInfo method in classTypeToSlam.GetMethods(bf))
+                            {
+                                if (method.Name == restorationItem.OriginalMethod.Name)
+                                {
+                                    InjectionHelper.UpdateILCodes(method, restorationItem.ReplacedMethodDetails);
+                                }
+                            }
+                        
+                        }
+                    }
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                InjectionHelper.Log(e.Message);
+                if (e.StackTrace !=null)                  InjectionHelper.Log(e.StackTrace);
+               if (e.InnerException !=null && e.InnerException.Message!=null) InjectionHelper.Log(e.InnerException.Message);
+                    
+            }
 
-            
         }
         private void SlamClassInternal(Type sourceType, Type replacementType)
         {
+          
             var methodReplacements = new List<MethodInfoRestoration>();
             BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
             MethodInfo methodFromSource = null;
@@ -106,7 +138,10 @@ namespace Hobbisoft.Slam.DynamicInjection
 
                 methodFromSource = null;
                 // make sure its one we actually can replace TODO: Add logging to those that cannot be
-                if (methodFromReplacement.GetMethodImplementationFlags() == MethodImplAttributes.IL)
+                if (
+                        methodFromReplacement.GetMethodImplementationFlags() == MethodImplAttributes.IL
+                    || methodFromReplacement.GetMethodImplementationFlags() == MethodImplAttributes.NoInlining
+                    )
                 {
                     bool isOverLoaded = false;
                     var replacementMethodParameterInfo = methodFromReplacement.GetParameters();
@@ -160,15 +195,15 @@ namespace Hobbisoft.Slam.DynamicInjection
 
                     // Jit 
                     RuntimeHelpers.PrepareMethod(methodFromSource.MethodHandle);
-
+                    RuntimeHelpers.PrepareMethod(methodFromReplacement.MethodHandle);
                     // let's store this stuff
                     MethodInfoRestoration methodInfoRestoration = new MethodInfoRestoration()
                     {
                          OriginalMethod = methodFromSource,
                          ReplacedMethod = methodFromReplacement,
                       
-
-                         OriginalMethodDetails = methodFromSource.GetMethodBody().GetILAsByteArray(),
+                         
+                        OriginalMethodDetails = methodFromSource.GetMethodBody().GetILAsByteArray(),
                          ReplacedMethodDetails = methodFromReplacement.GetMethodBody().GetILAsByteArray(),
                        
                     };
@@ -228,16 +263,17 @@ namespace Hobbisoft.Slam.DynamicInjection
                 }
                 else
                 {
-                    InjectionHelper.UpdateILCodes(m.OriginalMethod, m.ReplacedMethodDetails);
+                    if (m.OriginalMethod.IsStatic) // OK to slam statics
+                        InjectionHelper.UpdateILCodes(m.OriginalMethod, m.ReplacedMethodDetails);
                    
                 }
             }
         }
 
-
+        
         private int FindBytes(byte[] haystack, byte[] needle)
         {
-            byte[] newHaystack=null;
+          
             int insertIndex = -1;
             var len = needle.Length;
             var limit = haystack.Length - len;
@@ -347,6 +383,15 @@ namespace Hobbisoft.Slam.DynamicInjection
             var m = new MethodBodyReader(methonInfo);
             return m.instructions;
         }
+        private void OutputIL(string className, string methodName, byte[] results)
+        {
+            Debug.WriteLine(className + "." + methodName);
+            Debug.WriteLine("===========================");
+            // output in debug mode
+            foreach (var b in results) { Debug.WriteLine(b); }
+
+
+        }
 
         private void OutputMethodData(MethodInfo sourceMethod)
         {
@@ -370,6 +415,10 @@ namespace Hobbisoft.Slam.DynamicInjection
         }
 
         #endregion
+
+     
+
+       
     }
 
     #region Classifier

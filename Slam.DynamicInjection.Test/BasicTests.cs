@@ -4,12 +4,12 @@ using System.Reflection;
 
 using Hobbisoft.Slam.DynamicInjection.UnitTests.Classes;
 using System.Runtime.CompilerServices;
-
+using Slam.UnitTests.Classes.External;
 #if UNITTEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Reflection;
-using Slam.UnitTests.Classes.External;
+
 
 
 
@@ -44,8 +44,22 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
             DefaultInjectors.UpdateLogger("Message1");
 #endif
         }
+        #if UNITTEST
+        [TestInitialize]
+#endif
 
+        public void Init()
+        {
 
+        }
+        #if UNITTEST
+        [TestCleanup]
+#endif
+        public void Dispose()
+        {
+             // Unload the unmanaged injection.dll
+            InjectionHelper.Uninitialize();
+        }
 #if UNITTEST
         [TestMethod]
 #endif
@@ -81,8 +95,8 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
         public void RunSquirt()
         {
             // return this is not working yet
-            Injector.GetILForMethod(typeof(Squirter), "MyFunction");
-            Injector.GetILForMethod(typeof(Squirtee), "MyFunction");
+          //  Injector.GetILForMethod(typeof(Squirter), "MyFunction");
+         //   Injector.GetILForMethod(typeof(Squirtee), "MyFunction");
             ////Injector.GetILForMethod(typeof(FinalSquirtExample), "MyFunction");
 
 
@@ -95,13 +109,15 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 #if UNITTEST
         [TestMethod]
 #endif
-        [MethodImpl(MethodImplOptions.NoInlining)]
+      
         public void RunExternal()
         {
-           
+            //var ec = new ExternalClass();
+            //var ec2 = new ExternalClass_Slam();
+          
             Injector.SlamClass(typeof(ExternalClass), typeof(ExternalClass_Slam));
-
-           var ec = new ExternalClass();
+          var   ec = new ExternalClass();
+        
            Log.Output(@"Current Value of SlamExternalReferenceTest.ImExternal() now = " + ec.ImExternal());
         }
 #if UNITTEST

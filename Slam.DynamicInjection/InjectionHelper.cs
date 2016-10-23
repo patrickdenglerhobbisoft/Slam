@@ -203,6 +203,11 @@ public static class InjectionHelper
     public static void Log(string message)
     {
         System.Diagnostics.Debug.WriteLine(message);
+        using (StreamWriter sw = File.AppendText(@"C:\Users\Patrick\Documents\GitHub\bin\results.txt"))
+        {
+            sw.WriteLine(message);
+        }
+    //    System.IO.File.WriteAllText(@"C:\Users\Patrick\Documents\GitHub\bin\results.txt", message);
         //if (_loggingForm != null)
         //{
         //    _loggingForm.Show();

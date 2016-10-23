@@ -26,19 +26,21 @@
     <DefineConstants>TRACE;DEBUG;USEUIX;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Slam.UnitTests.ConsoleApp.snk</AssemblyOriginatorKeyFile>
@@ -79,6 +81,10 @@
     <ProjectReference Include="..\Slam.DynamicInjection\Slam.Core.csproj">
       <Project>{dd9a47fe-9ddd-4965-8c6f-c60765bc072a}</Project>
       <Name>Slam.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slam.UnitTests.Classes.External\Slam.UnitTests.Classes.External.csproj">
+      <Project>{66b15acf-90dc-4303-88c5-9f4f94a1ee05}</Project>
+      <Name>Slam.UnitTests.Classes.External</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -79,7 +79,88 @@ namespace Hobbisoft.Slam.DynamicInjection
             
         }
 
-     
+     /*
+Description:
+
+    Injects a library into the target process. This is a very stable operation.
+    The problem so far is, that only the NET layer will support injection
+    through WOW64 boundaries and into other terminal sessions. It is quite
+    complex to realize with unmanaged code and that's why it is not supported!
+
+    If you really need this feature I highly recommend to at least look at C++.NET
+    because using the managed injection can speed up your development progress
+    about orders of magnitudes. I know by experience that writing the required
+    multi-process injection code in any unmanaged language is a rather daunting task!
+
+Parameters:
+
+    - InTargetPID
+
+        The process in which the library should be injected.
+    
+    - InWakeUpTID
+
+        If the target process was created suspended (RhCreateAndInject), then
+        this parameter should be set to the main thread ID of the target.
+        You may later resume the process from within the injected library
+        by calling RhWakeUpProcess(). If the process is already running, you
+        should specify zero.
+
+    - InInjectionOptions
+
+        All flags can be combined.
+
+        EASYHOOK_INJECT_DEFAULT: 
+            
+            No special behavior. The given libraries are expected to be unmanaged DLLs.
+            Further they should export an entry point named 
+            "NativeInjectionEntryPoint" (in case of 64-bit) and
+            "_NativeInjectionEntryPoint@4" (in case of 32-bit). The expected entry point 
+            signature is REMOTE_ENTRY_POINT.
+
+        EASYHOOK_INJECT_MANAGED: 
+        
+            The given user library is a NET assembly. Further they should export a class
+            named "EasyHook.InjectionLoader" with a static method named "Main". The
+            signature of this method is expected to be "int (String)". Please refer
+            to the managed injection loader of EasyHook for more information about
+            writing such managed entry points.
+
+        EASYHOOK_INJECT_STEALTH:
+
+            Uses the experimental stealth thread creation. If it fails
+            you may try it with default settings. 
+
+		EASYHOOK_INJECT_HEART_BEAT:
+			
+			Is only used internally to workaround the managed process creation bug.
+			For curiosity, NET seems to hijack our remote thread if a managed process
+			is created suspended. It doesn't do anything with the suspended main thread,
+
+
+    - InLibraryPath_x86
+
+        A relative or absolute path to the 32-bit version of the user library being injected.
+        If you don't want to inject into 32-Bit processes, you may set this parameter to NULL.
+
+    - InLibraryPath_x64
+
+        A relative or absolute path to the 64-bit version of the user library being injected.
+        If you don't want to inject into 64-Bit processes, you may set this parameter to NULL.
+
+    - InPassThruBuffer
+
+        An optional buffer containg data to be passed to the injection entry point. Such data
+        is available in both, the managed and unmanaged user library entry points.
+        Set to NULL if no used.
+
+    - InPassThruSize
+
+        Specifies the size in bytes of the pass thru data. If "InPassThruBuffer" is NULL, this
+        parameter shall also be zero.
+
+Returns:
+      * */
         public static void Slam( object classToSlam)
         {
             InjectionHelper.Log("entered Slam");
@@ -122,6 +203,21 @@ namespace Hobbisoft.Slam.DynamicInjection
             MethodInfo methodFromSource = null;
             MethodInfo methodFromSquirt=null; // 
 
+            var p = Process.GetProcesses();
+            foreach  ( var o in p)
+            {
+                try
+                {
+                    foreach (ProcessModule m in o.Modules)
+                    {
+                        Log(m.ModuleName + " in process " + o.ProcessName + " " + " Id: " + o.Id);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log(e.Message);
+                }
+            }
             // walk the replacment classes (likely) subset of members and inject into source
             foreach (MethodInfo methodFromReplacement in replacementType.GetMethods(bf))
             {
@@ -193,9 +289,7 @@ namespace Hobbisoft.Slam.DynamicInjection
                         }
                     }
 
-                    // Jit 
-                    RuntimeHelpers.PrepareMethod(methodFromSource.MethodHandle);
-                    RuntimeHelpers.PrepareMethod(methodFromReplacement.MethodHandle);
+
                     // let's store this stuff
                     MethodInfoRestoration methodInfoRestoration = new MethodInfoRestoration()
                     {
@@ -263,12 +357,36 @@ namespace Hobbisoft.Slam.DynamicInjection
                 }
                 else
                 {
-                    if (m.OriginalMethod.IsStatic) // OK to slam statics
+                   if (m.OriginalMethod.IsStatic) // OK to slam statics
                         InjectionHelper.UpdateILCodes(m.OriginalMethod, m.ReplacedMethodDetails);
-                   
+                   else
+                   {
+                       HookAndUpdate(m);
+                   }
                 }
             }
         }
+
+        private void HookAndUpdate(MethodInfoRestoration m)
+        {
+             
+            
+           
+            MethodInfo targetMethod = m.OriginalMethod;
+            MethodInfo replaceMethod = m.ReplacedMethod;
+
+            byte[] ilCodes = new byte[5];
+            ilCodes[0] = (byte)OpCodes.Jmp.Value;
+            ilCodes[1] = (byte)(replaceMethod.MetadataToken & 0xFF);
+            ilCodes[2] = (byte)(replaceMethod.MetadataToken >> 8 & 0xFF);
+            ilCodes[3] = (byte)(replaceMethod.MetadataToken >> 16 & 0xFF);
+            ilCodes[4] = (byte)(replaceMethod.MetadataToken >> 24 & 0xFF);
+
+            InjectionHelper.UpdateILCodes(targetMethod, ilCodes);
+
+            
+        }
+        
 
         
         private int FindBytes(byte[] haystack, byte[] needle)

@@ -5,10 +5,12 @@ using System.Reflection;
 using Hobbisoft.Slam.DynamicInjection.UnitTests.Classes;
 using System.Runtime.CompilerServices;
 using Slam.UnitTests.Classes.External;
+using System.Runtime.ExceptionServices;
 #if UNITTEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 
 
 
@@ -109,16 +111,24 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
 #if UNITTEST
         [TestMethod]
 #endif
-      
+        [HandleProcessCorruptedStateExceptions]
         public void RunExternal()
         {
             //var ec = new ExternalClass();
             //var ec2 = new ExternalClass_Slam();
-          
-            Injector.SlamClass(typeof(ExternalClass), typeof(ExternalClass_Slam));
-          var   ec = new ExternalClass();
-        
-           Log.Output(@"Current Value of SlamExternalReferenceTest.ImExternal() now = " + ec.ImExternal());
+            try
+            {
+                var ec = new ExternalClass();
+                Injector.SlamClass(typeof(ExternalClass), typeof(ExternalClass_Slam));
+       
+
+                Log.Output(@"Current Value of SlamExternalReferenceTest.ImExternal() now = " + ec.ImExternal());
+            }
+            catch (Exception e)
+            {
+                Log.Output(e.Message);
+
+            }
         }
 #if UNITTEST
         [TestMethod]
@@ -155,6 +165,22 @@ namespace Hobbisoft.Slam.DynamicInjection.Test
             Log.Output("Result of running sealed method is " + Convert.ToBoolean(result).ToString());
 
         }
+
+    }
+
+    public class ExternalClass_Slam
+    {
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+
+        public string ImExternal()
+        {
+
+            InjectionHelper.Log("In #2");
+            return "I'm in DLL2 - SLam";
+        }
+
+
 
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,8 +35,14 @@ namespace Harnes
         {
             ecs = new ExternalClass_Slam();
             ec = new ExternalClass();
+            while (!cancel)
+            {
+                Console.WriteLine(ecs.ImExternal());
+                Console.WriteLine(ec.ImExternal());
+                Thread.Sleep(1000);
+            }
         }
-
+        private bool cancel = false;
         private void btnUnload_Click(object sender, RoutedEventArgs e)
         {
 

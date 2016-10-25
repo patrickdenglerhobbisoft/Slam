@@ -98,6 +98,7 @@
     <Compile Include="CustomAttributes.cs" />
     <Compile Include="DDIException.cs" />
     <Compile Include="DefaultInjectors.cs" />
+    <Compile Include="Externals.cs" />
     <Compile Include="InjectionHelper.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="MessageClientLog.cs" />

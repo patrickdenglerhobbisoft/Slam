@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Slam.UnitTests.Classes, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Slam.UnitTests.Classes.dll</HintPath>
+    </Reference>
+    <Reference Include="Slam.UnitTests.Classes.External, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Slam.UnitTests.Classes.External.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -93,16 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Slam.DynamicInjection.UnitTests.Classes\Slam.UnitTests.Classes.csproj">
-      <Project>{7279c489-79e3-4364-8ad8-c951993873ab}</Project>
-      <Name>Slam.UnitTests.Classes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Slam.UnitTests.Classes.External\Slam.UnitTests.Classes.External.csproj">
-      <Project>{66b15acf-90dc-4303-88c5-9f4f94a1ee05}</Project>
-      <Name>Slam.UnitTests.Classes.External</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,36 +7,38 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
 namespace Hobbisoft.Slam.DynamicInjection
 {
-
     public class MethodInfoRestoration
     {
 
-        public MethodInfo OriginalMethod {get;set;}
+
+        public MethodInfo OriginalMethod { get; set; }
         public MethodInfo ReplacedMethod { get; set; }
 
 
         public byte[] OriginalMethodDetails { get; set; }
         public byte[] ReplacedMethodDetails { get; set; }
-    
+
 
     }
 
-    public enum SlamType {  Replace, Squirt }
-   
+    public enum SlamType { Replace, Squirt }
 
 
     public class Injector : IDisposable
     {
 
-         private static BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
 
 
-         public static Dictionary<string, List<MethodInfoRestoration>> ClassInfoRestoration;
+        private static BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
+
+
+        public static Dictionary<string, List<MethodInfoRestoration>> ClassInfoRestoration;
         public static void SlamClass(Type sourceType, Type replacementType, Type finalModelType = null)
         {
             InitializeIfNot();
@@ -60,7 +62,7 @@ namespace Hobbisoft.Slam.DynamicInjection
         private List<Byte[]> GetILForMethodInternal(Type type, string methodName)
         {
             MethodInfo methodToDempose = null;
-            List<Byte[]> results = new  List<byte[]>();
+            List<Byte[]> results = new List<byte[]>();
             foreach (MethodInfo methodToInspect in type.GetMethods(bf))
             {
                 if (methodToInspect.Name == methodName)
@@ -72,96 +74,96 @@ namespace Hobbisoft.Slam.DynamicInjection
 
 #if DEBUG
             foreach (var result in results)
-                OutputIL(type.Name,methodName,result);
+                OutputIL(type.Name, methodName, result);
 #endif
 
             return results;
-            
+
         }
 
-     /*
-Description:
+        /*
+   Description:
 
-    Injects a library into the target process. This is a very stable operation.
-    The problem so far is, that only the NET layer will support injection
-    through WOW64 boundaries and into other terminal sessions. It is quite
-    complex to realize with unmanaged code and that's why it is not supported!
+       Injects a library into the target process. This is a very stable operation.
+       The problem so far is, that only the NET layer will support injection
+       through WOW64 boundaries and into other terminal sessions. It is quite
+       complex to realize with unmanaged code and that's why it is not supported!
 
-    If you really need this feature I highly recommend to at least look at C++.NET
-    because using the managed injection can speed up your development progress
-    about orders of magnitudes. I know by experience that writing the required
-    multi-process injection code in any unmanaged language is a rather daunting task!
+       If you really need this feature I highly recommend to at least look at C++.NET
+       because using the managed injection can speed up your development progress
+       about orders of magnitudes. I know by experience that writing the required
+       multi-process injection code in any unmanaged language is a rather daunting task!
 
-Parameters:
+   Parameters:
 
-    - InTargetPID
+       - InTargetPID
 
-        The process in which the library should be injected.
+           The process in which the library should be injected.
     
-    - InWakeUpTID
+       - InWakeUpTID
 
-        If the target process was created suspended (RhCreateAndInject), then
-        this parameter should be set to the main thread ID of the target.
-        You may later resume the process from within the injected library
-        by calling RhWakeUpProcess(). If the process is already running, you
-        should specify zero.
+           If the target process was created suspended (RhCreateAndInject), then
+           this parameter should be set to the main thread ID of the target.
+           You may later resume the process from within the injected library
+           by calling RhWakeUpProcess(). If the process is already running, you
+           should specify zero.
 
-    - InInjectionOptions
+       - InInjectionOptions
 
-        All flags can be combined.
+           All flags can be combined.
 
-        EASYHOOK_INJECT_DEFAULT: 
+           EASYHOOK_INJECT_DEFAULT: 
             
-            No special behavior. The given libraries are expected to be unmanaged DLLs.
-            Further they should export an entry point named 
-            "NativeInjectionEntryPoint" (in case of 64-bit) and
-            "_NativeInjectionEntryPoint@4" (in case of 32-bit). The expected entry point 
-            signature is REMOTE_ENTRY_POINT.
+               No special behavior. The given libraries are expected to be unmanaged DLLs.
+               Further they should export an entry point named 
+               "NativeInjectionEntryPoint" (in case of 64-bit) and
+               "_NativeInjectionEntryPoint@4" (in case of 32-bit). The expected entry point 
+               signature is REMOTE_ENTRY_POINT.
 
-        EASYHOOK_INJECT_MANAGED: 
+           EASYHOOK_INJECT_MANAGED: 
         
-            The given user library is a NET assembly. Further they should export a class
-            named "EasyHook.InjectionLoader" with a static method named "Main". The
-            signature of this method is expected to be "int (String)". Please refer
-            to the managed injection loader of EasyHook for more information about
-            writing such managed entry points.
+               The given user library is a NET assembly. Further they should export a class
+               named "EasyHook.InjectionLoader" with a static method named "Main". The
+               signature of this method is expected to be "int (String)". Please refer
+               to the managed injection loader of EasyHook for more information about
+               writing such managed entry points.
 
-        EASYHOOK_INJECT_STEALTH:
+           EASYHOOK_INJECT_STEALTH:
 
-            Uses the experimental stealth thread creation. If it fails
-            you may try it with default settings. 
+               Uses the experimental stealth thread creation. If it fails
+               you may try it with default settings. 
 
-		EASYHOOK_INJECT_HEART_BEAT:
+           EASYHOOK_INJECT_HEART_BEAT:
 			
-			Is only used internally to workaround the managed process creation bug.
-			For curiosity, NET seems to hijack our remote thread if a managed process
-			is created suspended. It doesn't do anything with the suspended main thread,
+               Is only used internally to workaround the managed process creation bug.
+               For curiosity, NET seems to hijack our remote thread if a managed process
+               is created suspended. It doesn't do anything with the suspended main thread,
 
 
-    - InLibraryPath_x86
+       - InLibraryPath_x86
 
-        A relative or absolute path to the 32-bit version of the user library being injected.
-        If you don't want to inject into 32-Bit processes, you may set this parameter to NULL.
+           A relative or absolute path to the 32-bit version of the user library being injected.
+           If you don't want to inject into 32-Bit processes, you may set this parameter to NULL.
 
-    - InLibraryPath_x64
+       - InLibraryPath_x64
 
-        A relative or absolute path to the 64-bit version of the user library being injected.
-        If you don't want to inject into 64-Bit processes, you may set this parameter to NULL.
+           A relative or absolute path to the 64-bit version of the user library being injected.
+           If you don't want to inject into 64-Bit processes, you may set this parameter to NULL.
 
-    - InPassThruBuffer
+       - InPassThruBuffer
 
-        An optional buffer containg data to be passed to the injection entry point. Such data
-        is available in both, the managed and unmanaged user library entry points.
-        Set to NULL if no used.
+           An optional buffer containg data to be passed to the injection entry point. Such data
+           is available in both, the managed and unmanaged user library entry points.
+           Set to NULL if no used.
 
-    - InPassThruSize
+       - InPassThruSize
 
-        Specifies the size in bytes of the pass thru data. If "InPassThruBuffer" is NULL, this
-        parameter shall also be zero.
+           Specifies the size in bytes of the pass thru data. If "InPassThruBuffer" is NULL, this
+           parameter shall also be zero.
 
-Returns:
-      * */
-        public static void Slam( object classToSlam)
+   Returns:
+         * */
+        public static void Slam(object classToSlam)
         {
             InjectionHelper.Log("entered Slam");
             try
@@ -180,42 +182,73 @@ Returns:
                                     InjectionHelper.UpdateILCodes(method, restorationItem.ReplacedMethodDetails);
                                 }
                             }
-                        
+
                         }
                     }
-                    
+
                 }
             }
             catch (Exception e)
             {
                 InjectionHelper.Log(e.Message);
-                if (e.StackTrace !=null)                  InjectionHelper.Log(e.StackTrace);
-               if (e.InnerException !=null && e.InnerException.Message!=null) InjectionHelper.Log(e.InnerException.Message);
-                    
+                if (e.StackTrace != null) InjectionHelper.Log(e.StackTrace);
+                if (e.InnerException != null && e.InnerException.Message != null) InjectionHelper.Log(e.InnerException.Message);
+
             }
 
         }
+
+
+        //private string GetExecutablePath(int ProcessId)
+        //{
+        //    var buffer = new StringBuilder(1024);
+        //    IntPtr hprocess = OpenProcess(ProcessAccessFlags.QueryLimitedInformation,
+        //                                  false, ProcessId);
+        //    if (hprocess != IntPtr.Zero)
+        //    {
+        //        try
+        //        {
+        //            int size = buffer.Capacity;
+        //            if (QueryFullProcessImageName(hprocess, 0, buffer, out size))
+        //            {
+        //                return buffer.ToString();
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            CloseHandle(hprocess);
+        //        }
+        //    }
+        //    return string.Empty;
+        //}
+
+
+
         private void SlamClassInternal(Type sourceType, Type replacementType)
         {
-          
+
             var methodReplacements = new List<MethodInfoRestoration>();
             BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
             MethodInfo methodFromSource = null;
-            MethodInfo methodFromSquirt=null; // 
+            MethodInfo methodFromSquirt = null; // 
 
-            var p = Process.GetProcesses();
-            foreach  ( var o in p)
+            var p = Process.GetProcesses("PATRICK_MSI");
+            foreach (var o in p)
             {
                 try
                 {
                     foreach (ProcessModule m in o.Modules)
                     {
                         Log(m.ModuleName + " in process " + o.ProcessName + " " + " Id: " + o.Id);
+                        if (m.ModuleName.ToUpper().Contains("Harn".ToUpper()))
+                        {
+                            var hook = m;
+                        }
                     }
                 }
                 catch (Exception e)
                 {
-                    Log(e.Message);
+                    Log(o.Id.ToString());
                 }
             }
             // walk the replacment classes (likely) subset of members and inject into source
@@ -226,7 +259,7 @@ Returns:
                     (methodFromReplacement.Name == "ReferenceEquals") || (methodFromReplacement.Name == "GetType") || (methodFromReplacement.Name == "Finalize") || (methodFromReplacement.Name == "MemberwiseClone"))
                     continue;
 
-        
+
 
                 // check for SlamIngore attribute
                 if (methodFromReplacement.GetCustomAttributes().Where(a => a.TypeId.ToString() == "Hobbisoft.Slam.DynamicInjection.SlamIgnore").Count > 0)
@@ -293,13 +326,13 @@ Returns:
                     // let's store this stuff
                     MethodInfoRestoration methodInfoRestoration = new MethodInfoRestoration()
                     {
-                         OriginalMethod = methodFromSource,
-                         ReplacedMethod = methodFromReplacement,
-                      
-                         
+                        OriginalMethod = methodFromSource,
+                        ReplacedMethod = methodFromReplacement,
+
+
                         OriginalMethodDetails = methodFromSource.GetMethodBody().GetILAsByteArray(),
-                         ReplacedMethodDetails = methodFromReplacement.GetMethodBody().GetILAsByteArray(),
-                       
+                        ReplacedMethodDetails = methodFromReplacement.GetMethodBody().GetILAsByteArray(),
+
                     };
                     methodReplacements.Add(methodInfoRestoration);
 
@@ -309,13 +342,13 @@ Returns:
 
                     ClassInfoRestoration[sourceType.Name].Add(methodInfoRestoration);
 
-                   
+
                 }
             }
 
 
             byte[] byteArrayOfNewFunction;
-            
+
             // do IL work (for now doing it seperately
             foreach (var m in methodReplacements)
             {
@@ -326,17 +359,17 @@ Returns:
                         .Count > 0)
                 {
 
-                   
+
                     int indexOfSquirtHere = m.ReplacedMethod.GetCustomAttribute<SlamSquirter>().InjectionIndex;
                     if (indexOfSquirtHere < 0 || indexOfSquirtHere > m.OriginalMethodDetails.Length)
                     {
                         throw new Exception("Index out of bounds");
                     }
-                
-                    
+
+
                     byteArrayOfNewFunction = new byte[m.OriginalMethodDetails.Length + m.ReplacedMethodDetails.Length];
 
-                    Array.Copy(m.OriginalMethodDetails, 0, byteArrayOfNewFunction, 0, indexOfSquirtHere );
+                    Array.Copy(m.OriginalMethodDetails, 0, byteArrayOfNewFunction, 0, indexOfSquirtHere);
 
                     Array.Copy(m.ReplacedMethodDetails, 0, byteArrayOfNewFunction, indexOfSquirtHere, m.ReplacedMethodDetails.Length);
 
@@ -352,26 +385,26 @@ Returns:
                     OutputIL(sourceType.Name, m.OriginalMethod.Name + " (Squirter)", m.ReplacedMethodDetails);
                     // squirter
                     OutputIL(sourceType.Name, m.OriginalMethod.Name + " (New Squirtee)", byteArrayOfNewFunction);
-                   
+
 
                 }
                 else
                 {
-                   if (m.OriginalMethod.IsStatic) // OK to slam statics
+                    if (m.OriginalMethod.IsStatic) // OK to slam statics
                         InjectionHelper.UpdateILCodes(m.OriginalMethod, m.ReplacedMethodDetails);
-                   else
-                   {
-                       HookAndUpdate(m);
-                   }
+                    else
+                    {
+                        HookAndUpdate(m);
+                    }
                 }
             }
         }
 
         private void HookAndUpdate(MethodInfoRestoration m)
         {
-             
-            
-           
+
+
+
             MethodInfo targetMethod = m.OriginalMethod;
             MethodInfo replaceMethod = m.ReplacedMethod;
 
@@ -384,14 +417,14 @@ Returns:
 
             InjectionHelper.UpdateILCodes(targetMethod, ilCodes);
 
-            
-        }
-        
 
-        
+        }
+
+
+
         private int FindBytes(byte[] haystack, byte[] needle)
         {
-          
+
             int insertIndex = -1;
             var len = needle.Length;
             var limit = haystack.Length - len;
@@ -409,7 +442,7 @@ Returns:
                 }
             }
 
-            
+
             return insertIndex;
 
         }
@@ -534,9 +567,9 @@ Returns:
 
         #endregion
 
-     
 
-       
+
+
     }
 
     #region Classifier

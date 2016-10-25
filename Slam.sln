@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Slam.Engine", "Slam.Core\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slam.UnitTests.Classes.External", "Slam.UnitTests.Classes.External\Slam.UnitTests.Classes.External.csproj", "{66B15ACF-90DC-4303-88C5-9F4F94A1EE05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harnes", "Harnes\Harnes.csproj", "{E530D5A5-DD71-43BE-9C67-D680F6738D90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug - X64|Any CPU = Debug - X64|Any CPU
@@ -241,6 +243,34 @@ Global
 		{66B15ACF-90DC-4303-88C5-9F4F94A1EE05}.Release|x64.Build.0 = Release|Any CPU
 		{66B15ACF-90DC-4303-88C5-9F4F94A1EE05}.Release|x86.ActiveCfg = Release|Any CPU
 		{66B15ACF-90DC-4303-88C5-9F4F94A1EE05}.Release|x86.Build.0 = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|Any CPU.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|Any CPU.Build.0 = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|Win32.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|x64.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug - X64|x86.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|Any CPU.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|Any CPU.Build.0 = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|Mixed Platforms.Build.0 = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|Win32.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|x64.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release - X64|x86.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|x64.ActiveCfg = Release|Any CPU
+		{E530D5A5-DD71-43BE-9C67-D680F6738D90}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

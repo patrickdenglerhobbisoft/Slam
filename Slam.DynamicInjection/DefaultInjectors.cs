@@ -8,10 +8,10 @@ using System.Data.SqlClient;
 
 using Newtonsoft.Json;
 using System.Threading;
-using Hobbisoft.Slam.Tools.Analyzers;
+using Slam.Visualizers;
 using Microsoft.VisualStudio.Shell;
 
-namespace Hobbisoft.Slam.DynamicInjection
+namespace Slam.DynamicInjection
 {
 
     public enum VisualizerType { Database = 1 }
@@ -50,15 +50,16 @@ namespace Hobbisoft.Slam.DynamicInjection
 
         }
 
-        public async static void UpdateLogger(object message, Exception exception = null)
+        public async static void LogMessage(object message, Exception exception = null)
         {
             if (_singletonDefaultInjectors == null)
             {
                 _singletonDefaultInjectors = new DefaultInjectors();
             }
 
-
-            await _singletonDefaultInjectors.messageClientLog.Send(message, exception);
+            
+               await     _singletonDefaultInjectors.messageClientLog.Send(message, exception);
+             
 
         }
     }

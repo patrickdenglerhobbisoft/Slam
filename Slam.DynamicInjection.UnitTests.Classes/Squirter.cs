@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hobbisoft.Slam.DynamicInjection;
+using Slam.DynamicInjection;
 
-namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
+namespace Slam.UnitTests.Classes
 {
     public class Squirter
     {

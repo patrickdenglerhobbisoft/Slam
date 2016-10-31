@@ -59,13 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicClasses.cs" />
-    <Compile Include="ExternalClassButNot.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SealedClass.cs" />
-    <Compile Include="Slammers.cs" />
     <Compile Include="Squirtee.cs" />
     <Compile Include="Squirter.cs" />
+    <Compile Include="WriteLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slam.DynamicInjection\Slam.Core.csproj">

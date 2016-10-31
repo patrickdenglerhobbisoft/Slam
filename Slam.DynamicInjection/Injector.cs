@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace Hobbisoft.Slam.DynamicInjection
+namespace Slam.DynamicInjection
 {
     public class MethodInfoRestoration
     {
@@ -232,25 +232,25 @@ namespace Hobbisoft.Slam.DynamicInjection
             MethodInfo methodFromSource = null;
             MethodInfo methodFromSquirt = null; // 
 
-            var p = Process.GetProcesses("PATRICK_MSI");
-            foreach (var o in p)
-            {
-                try
-                {
-                    foreach (ProcessModule m in o.Modules)
-                    {
-                        Log(m.ModuleName + " in process " + o.ProcessName + " " + " Id: " + o.Id);
-                        if (m.ModuleName.ToUpper().Contains("Harn".ToUpper()))
-                        {
-                            var hook = m;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log(o.Id.ToString());
-                }
-            }
+            //var p = Process.GetProcesses("PATRICK_MSI");
+            //foreach (var o in p)
+            //{
+            //    try
+            //    {
+            //        foreach (ProcessModule m in o.Modules)
+            //        {
+            //            Log(m.ModuleName + " in process " + o.ProcessName + " " + " Id: " + o.Id);
+            //            if (m.ModuleName.ToUpper().Contains("Harn".ToUpper()))
+            //            {
+            //                var hook = m;
+            //            }
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Log(o.Id.ToString());
+            //    }
+            //}
             // walk the replacment classes (likely) subset of members and inject into source
             foreach (MethodInfo methodFromReplacement in replacementType.GetMethods(bf))
             {
@@ -262,7 +262,7 @@ namespace Hobbisoft.Slam.DynamicInjection
 
 
                 // check for SlamIngore attribute
-                if (methodFromReplacement.GetCustomAttributes().Where(a => a.TypeId.ToString() == "Hobbisoft.Slam.DynamicInjection.SlamIgnore").Count > 0)
+                if (methodFromReplacement.GetCustomAttributes().Where(a => a.TypeId.ToString() == "Slam.DynamicInjection.SlamIgnore").Count > 0)
                     continue;
 
                 methodFromSource = null;
@@ -355,7 +355,7 @@ namespace Hobbisoft.Slam.DynamicInjection
                 // check for slam vs. squirt
                 if (
                     m.OriginalMethod.GetCustomAttributes()
-                        .Where(a => a.TypeId.ToString() == "Hobbisoft.Slam.DynamicInjection.SlamSquirtee")
+                        .Where(a => a.TypeId.ToString() == "Slam.DynamicInjection.SlamSquirtee")
                         .Count > 0)
                 {
 
@@ -390,12 +390,12 @@ namespace Hobbisoft.Slam.DynamicInjection
                 }
                 else
                 {
-                    if (m.OriginalMethod.IsStatic) // OK to slam statics
+                 //   if (m.OriginalMethod.IsStatic) // OK to slam statics
                         InjectionHelper.UpdateILCodes(m.OriginalMethod, m.ReplacedMethodDetails);
-                    else
-                    {
-                        HookAndUpdate(m);
-                    }
+                //    else
+                //    {
+                //        HookAndUpdate(m);
+                //    }
                 }
             }
         }

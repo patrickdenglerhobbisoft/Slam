@@ -1,5 +1,4 @@
 ﻿#if VSTOOLS
-using Hobbisoft.Slam.Tools.Analyzers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,15 +10,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Hobbisoft.Slam.Tools.Analyzers;
 using Microsoft.VisualStudio.Shell;
+using Slam.Visualizers;
 /*
 http://msdn.microsoft.com/en-us/library/bb310550.aspx
 http://www.theserverside.net/blogs/thread.tss?thread_id=45078
 
  */
 
-namespace Hobbisoft.Slam.DynamicInjection
+namespace Slam.DynamicInjection
 {
     class MessageClientLog
     {
@@ -45,13 +44,7 @@ namespace Hobbisoft.Slam.DynamicInjection
 
         }
 
-        public async Task<bool> Send(SqlCommand command, string SqlConnection)
-        {
-            string Message = prepareSql(command, SqlConnection);
-            await SendMessage(Message);
-            return true;
 
-        }
 
         private async Task<bool> SendMessage(string Message)
         {
@@ -65,40 +58,27 @@ namespace Hobbisoft.Slam.DynamicInjection
 
                 viewStream.Position = 0;
                 viewStream.Write(message, 0, bufferSize);
-                WaitHandle.SignalAndWait(_messageWait, _messageHandled);
+                Thread t = new Thread(() =>
+                   {
+                       Debug.WriteLine("*************** MESSAGE ****************");
+                       WaitHandle.SignalAndWait(_messageWait, _messageHandled);
 
+                   });
+
+                t.SetApartmentState(ApartmentState.MTA);
+                t.Start();
             }
-
             return true;
         }
 
         private string prepareError(object message, Exception exception)
         {
-            LoggerRemote lr = new Tools.Analyzers.LoggerRemote()
+            LoggerRemote lr = new LoggerRemote()
             {
                 Message = message.ToString(),
             };
             return JsonConvert.SerializeObject(lr);
         }
-
-
-        private string prepareSql(SqlCommand command, string SqlConnection)
-        {
-            SqlRemote sqlRemote = new SqlRemote();
-
-            foreach (SqlParameter p in command.Parameters)
-            {
-                sqlRemote.SqlParameters.Add(new SqlRemoteParameter()
-                {
-                    ParameterName = p.ParameterName,
-                    ParameterValue = p.Value == null ? "null" : p.Value.ToString(),
-                });
-            }
-            sqlRemote.ConnectionString = SqlConnection;
-            sqlRemote.CommandText = command.CommandText;
-            return JsonConvert.SerializeObject(sqlRemote);
-        }
-
 
 
         public void Close()

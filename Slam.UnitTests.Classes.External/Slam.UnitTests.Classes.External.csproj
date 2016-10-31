@@ -57,6 +57,10 @@
     <None Include="a.snk" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Slam.DynamicInjection.UnitTests.Classes\Slam.UnitTests.Classes.csproj">
+      <Project>{7279c489-79e3-4364-8ad8-c951993873ab}</Project>
+      <Name>Slam.UnitTests.Classes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slam.DynamicInjection\Slam.Core.csproj">
       <Project>{dd9a47fe-9ddd-4965-8c6f-c60765bc072a}</Project>
       <Name>Slam.Core</Name>

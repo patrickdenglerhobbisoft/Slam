@@ -207,12 +207,7 @@ public static class InjectionHelper
         {
             sw.WriteLine(message);
         }
-    //    System.IO.File.WriteAllText(@"C:\Users\Patrick\Documents\GitHub\bin\results.txt", message);
-        //if (_loggingForm != null)
-        //{
-        //    _loggingForm.Show();
-        //    _loggingForm.AddMessage(message);
-        //}
+  
     }
 
 
@@ -236,8 +231,8 @@ public static class InjectionHelper
     /// 
     /// 
     /// </summary>
-    /// <param name="AssemblyeNameWithPath">e.g.  @"D:\inetpub\Common\Hobbisoft.Slam.Core.dll"</param>
-    /// <param name="FullClassName">e.g.  "Hobbisoft.Slam.Integration.Salesforce.MyFactoryFactory"</param>
+    /// <param name="AssemblyeNameWithPath">e.g.  @"D:\inetpub\Common\Slam.Core.dll"</param>
+    /// <param name="FullClassName">e.g.  "Slam.Integration.Salesforce.MyFactoryFactory"</param>
     /// <param name="MethodName">e.g.  "MySealedFunction"</param>
     /// <param name="MethodParameters">e.g.  new object[] { true, new ETPrincipal(1) };</param>
     /// <returns></returns>

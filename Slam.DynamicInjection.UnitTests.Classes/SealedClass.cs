@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
+namespace Slam.UnitTests.Classes
 {
 
-    internal interface IMyFactoryFactory
+    internal interface ISfSessionEntryFactory
     {
 
     }
@@ -16,11 +16,11 @@ namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
     /// <summary>
     /// SFSession Entry Factory 
     /// </summary>
-    internal class MyFactoryFactory : IMyFactoryFactory
+    internal class SfSessionEntryFactory : ISfSessionEntryFactory
     {
-        internal static bool MySealedFunction(bool RunAsAdmin, string MyString)
+        internal static bool GetSessionEntry(bool RunAsAdmin, string MyString)
         {
-           Log.Output("MySealedFunction called with string '" + MyString + "'");
+           Log.Output("GetSessionEntry called with string '" + MyString + "'");
            return true;
         }
     }

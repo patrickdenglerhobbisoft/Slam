@@ -1,5 +1,5 @@
 ﻿#if VSTOOLS
-using Hobbisoft.Slam.Tools.Analyzers;
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Hobbisoft.Slam.Tools.Analyzers;
+using Slam.Visualizers;
 using Microsoft.VisualStudio.Shell;
 /*
 http://msdn.microsoft.com/en-us/library/bb310550.aspx
@@ -19,7 +19,7 @@ http://www.theserverside.net/blogs/thread.tss?thread_id=45078
 
  */
 
-namespace Hobbisoft.Slam.DynamicInjection
+namespace Slam.DynamicInjection
 {
     class MessageClient
     {
@@ -74,7 +74,7 @@ namespace Hobbisoft.Slam.DynamicInjection
 
         private string prepareError(object message, Exception exception)
         {
-            LoggerRemote lr = new Tools.Analyzers.LoggerRemote()
+            LoggerRemote lr = new LoggerRemote()
             {
                 Message = message.ToString(),
             };

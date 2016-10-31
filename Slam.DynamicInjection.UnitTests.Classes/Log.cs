@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
+namespace Slam.UnitTests.Classes
 {
     public enum LogColor { Default }
     public static class Log
@@ -25,11 +25,9 @@ namespace Hobbisoft.Slam.DynamicInjection.UnitTests.Classes
                     prefix = "+++>";
                     break;
             }
-#if DEBUG
+
             Debug.WriteLine(prefix + " " + message);
-#else
-            Console.WriteLine(prefix + " " + message);
-#endif
+            Console.WriteLine(message);
 
         }
     }

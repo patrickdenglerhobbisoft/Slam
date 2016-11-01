@@ -18,7 +18,7 @@ namespace Slam.UnitTests.Classes
     /// </summary>
     internal class SfSessionEntryFactory : ISfSessionEntryFactory
     {
-        internal static bool GetSessionEntry(bool RunAsAdmin, string MyString)
+        private static bool GetSessionEntry(bool RunAsAdmin, string MyString)
         {
            Log.Output("GetSessionEntry called with string '" + MyString + "'");
            return true;

@@ -230,28 +230,8 @@ namespace Slam.DynamicInjection
             var methodReplacements = new List<MethodInfoRestoration>();
             BindingFlags bf = BindingFlags.FlattenHierarchy | BindingFlags.IgnoreReturn | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType;
             MethodInfo methodFromSource = null;
-            MethodInfo methodFromSquirt = null; // 
-
-            //var p = Process.GetProcesses("PATRICK_MSI");
-            //foreach (var o in p)
-            //{
-            //    try
-            //    {
-            //        foreach (ProcessModule m in o.Modules)
-            //        {
-            //            Log(m.ModuleName + " in process " + o.ProcessName + " " + " Id: " + o.Id);
-            //            if (m.ModuleName.ToUpper().Contains("Harn".ToUpper()))
-            //            {
-            //                var hook = m;
-            //            }
-            //        }
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        Log(o.Id.ToString());
-            //    }
-            //}
-            // walk the replacment classes (likely) subset of members and inject into source
+         
+       
             foreach (MethodInfo methodFromReplacement in replacementType.GetMethods(bf))
             {
                 // premptive strike that needs to be replaced with better determiners

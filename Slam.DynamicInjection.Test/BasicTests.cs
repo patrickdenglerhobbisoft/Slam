@@ -18,7 +18,7 @@ namespace Slam.Test
         {
             SlamStatic();
             SlamInstance();
-            SlamPartialClassReplacement();
+            SlamOverloadAndPartialWithIgnore();
             SlamOverloaded();
             SlamIgnore();
             SlamSealed();
@@ -30,12 +30,29 @@ namespace Slam.Test
         [TestMethod]
         public void SlamStatic()
         {
-            Log.Output(@"Current Value of MySourceClass.PublicStaticWhatsTheTime() = " + MySourceClass.PublicStaticWhatsTheTime());
+            DefaultInjectors.LogMessage(("Current Value of MySourceClass.PublicStaticWhatsTheTime() = " + MySourceClass.WhatsTheTIme()));
+           
+            Injector.SlamClass(typeof(MySourceClass), typeof(MySourceClass_Slam));
 
-            Injector.SlamClass(typeof(MySourceClass), typeof(MyMockClass));
-            Log.Output(" New Value of MySourceClass.PublicStaticWhatsTheTime() = " + MySourceClass.PublicStaticWhatsTheTime());
+            DefaultInjectors.LogMessage("New Value of MySourceClass.PublicStaticWhatsTheTime() = " + MySourceClass.WhatsTheTIme());
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [TestMethod]
         public void SlamInstance()
@@ -48,18 +65,55 @@ namespace Slam.Test
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [TestMethod]
-        public void SlamPartialClassReplacement()
+        public void SlamOverloadAndPartialWithIgnore()
         {
-            //  given a class with 3 functions
-            Log.Output(@"Current Value of BigClass.FunctionAs,FunctionBs,FunctionCs = " + BigClass.FunctionAs() + BigClass.FunctionBs() + BigClass.FunctionCs());
+            //  given a class with 3 overloaded functions
+            Log.Output(@"Current Value of all overloads of OverloadedFunction = "   + BigClass.OverloadedFunction(1) + 
+                BigClass.OverloadedFunction("string") +
+                BigClass.OverloadedFunction(1.5f));
 
             //  replace 2 of them
             Injector.SlamClass(typeof(BigClass), typeof(BigClass_PartialSlam));
 
-            Log.Output("New Value of BigClass.FunctionAs,FunctionBs,FunctionCs = " + BigClass.FunctionAs() + BigClass.FunctionBs() + BigClass.FunctionCs());
+            Log.Output("New Value of all overloads of OverloadedFunction = "        + BigClass.OverloadedFunction(1) + 
+                BigClass.OverloadedFunction("string") +
+                BigClass.OverloadedFunction(1.5f));
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [TestMethod]
         public void SlamOverloaded()
@@ -100,19 +154,21 @@ namespace Slam.Test
 
         }
 
+
+
+
+
         [TestMethod]
         public void SlamSealed()
         {
             // Below, we can't create a new SfSessionEntryFactory because the class is an interface based internal (sealed)
             // Try uncommenting the lines to see 
 
-            //ExactTarget.DynamicInjection.UnitTests.Classes.SfSessionEntryFactory sf =
-            //    new ExactTarget.DynamicInjection.UnitTests.Classes.SfSessionEntryFactory();
+            //Slam.UnitTests.Classes.SfSessionEntryFactory sf = new Slam.UnitTests.Classes.SfSessionEntryFactory();
 
-            // and so is the static function we want to call
+            //// and so is the static function we want to call
 
-            //ExactTarget.DynamicInjection.UnitTests.Classes.SfSessionEntryFactory.GetSessionEntry(true,
-            //    "Wish I could use you in my unit tests :(");
+            //Slam.UnitTests.Classes.SfSessionEntryFactory.GetSessionEntry(true, "Wish I could use you in my unit tests :( ");
 
 
             // object will be the result of the function call (see more below)
@@ -120,8 +176,8 @@ namespace Slam.Test
             var methodParameterData = new object[] { true, "I'm calling a sealed method!" };
 
             // with a small adjustment to injector, we can pass this method in to be slammed/bonded/injected
-            MethodInfo methodInfo = InjectionHelper.GetSealedMethod(@"D:\inetpub\Common\ExactTarget.DynamicInjection.UnitTests.Classes.dll",
-                "ExactTarget.DynamicInjection.UnitTests.Classes.SfSessionEntryFactory", "GetSessionEntry", methodParameterData,
+            MethodInfo methodInfo = InjectionHelper.GetSealedMethod(@"C:\Users\Patrick\Documents\GitHub\bin\Slam.UnitTests.Classes.dll",
+                "Slam.UnitTests.Classes.SfSessionEntryFactory", "GetSessionEntry", methodParameterData,
 
                 // but if we pass true to InvokeMethod and ref Object, it will call the method and return the result to your object
                 true, ref result);
@@ -134,6 +190,14 @@ namespace Slam.Test
         }
 
     
+
+
+
+
+
+
+
+
         [TestMethod]
         public void SlamSquirt()
         {
@@ -144,12 +208,23 @@ namespace Slam.Test
 
         }
     
+
+
+
+
+
+
+
         [TestMethod]
         public void SlamUI()
         {
-                DefaultInjectors.LogMessage("Goodbye World");
+            DefaultInjectors.LogMessage("Hello World");
 
         }
+
+
+
+
 
 
         #region In Development

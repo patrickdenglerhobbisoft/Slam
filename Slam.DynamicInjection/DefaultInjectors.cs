@@ -56,10 +56,15 @@ namespace Slam.DynamicInjection
             {
                 _singletonDefaultInjectors = new DefaultInjectors();
             }
+            else
+            {
+                _singletonDefaultInjectors.messageClient = new MessageClient();
+                _singletonDefaultInjectors.messageClientLog = new MessageClientLog();
 
-            
-               await     _singletonDefaultInjectors.messageClientLog.Send(message, exception);
-             
+            }
+
+            await _singletonDefaultInjectors.messageClientLog.Send(message, exception);
+
 
         }
     }

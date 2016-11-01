@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Slam.DynamicInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Slam.UnitTests.Classes
 {
     public class Squirtee
     {
-     
+      [SlamSquirtee]
         public static void MyFunction()
         {
             Log.Output("Begginning Function Body.");

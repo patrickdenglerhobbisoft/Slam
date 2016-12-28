@@ -1,6 +1,8 @@
 # Slam
 Slam : A new approach to (dependency) injection!!!
 
+https://www.youtube.com/watch?v=VjNTbzEPE88
+
 I got tired of the amount of uncessary code that modern day injection models require, and non-essential interfaces that make it difficult for the developer to navigate and debug code.  
 
 This effort is largely thanks to Jerry Wang http://www.codeproject.com/Articles/463508/NET-CLR-Injection-Modify-IL-Code-during-Run-time who created the most difficult part.

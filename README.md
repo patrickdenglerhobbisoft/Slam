@@ -1,7 +1,9 @@
 # Slam
 Slam : A new approach to (dependency) injection!!!
 
-https://www.youtube.com/watch?v=VjNTbzEPE88
+Intro and Part 1 of Slam - https://www.youtube.com/watch?v=VjNTbzEPE88
+Part 2 of Slam - https://www.youtube.com/watch?v=9n6936cBCWk
+
 
 I got tired of the amount of uncessary code that modern day injection models require, and non-essential interfaces that make it difficult for the developer to navigate and debug code.  
 

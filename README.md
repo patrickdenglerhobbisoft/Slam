@@ -8,7 +8,7 @@ Part 2 of Slam - https://www.youtube.com/watch?v=9n6936cBCWk
 
 I got tired of the amount of uncessary code that modern day injection models require, and non-essential interfaces that make it difficult for the developer to navigate and debug code.  
 
-This effort is largely thanks to Jerry Wang http://www.codeproject.com/Articles/463508/NET-CLR-Injection-Modify-IL-Code-during-Run-time who created the most difficult part.
+This effort takes advantage of Jerry Wang http://www.codeproject.com/Articles/463508/NET-CLR-Injection-Modify-IL-Code-during-Run-time work which is used in one of the calls.
 
 Slam is similar to DI or Mock frameworks except that the code is simply replaced at run time. And it allows for replacement and execution of sealed and private methods otherwise not accessible.
 
